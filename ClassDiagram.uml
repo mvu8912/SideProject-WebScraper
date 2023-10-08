@@ -1,0 +1,61 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE WebScraper {
+    +scrapeData(url: String, dataDefinition: String): Data
+}
+
+RECTANGLE DataAnalysis {
+    +performSentimentAnalysis(data: Data): SentimentAnalysisResult
+    +performTrendAnalysis(data: Data): TrendAnalysisResult
+    +predictPrices(data: Data): PricePredictionResult
+}
+
+RECTANGLE LeadGeneration {
+    +identifyLeads(data: Data, criteria: String): LeadInfo[]
+}
+
+RECTANGLE Notification {
+    +sendEmailNotification(email: String, message: String): void
+}
+
+RECTANGLE DataExport {
+    +exportData(data: Data, format: String): File
+}
+
+RECTANGLE DatabaseManager {
+    +saveData(data: Data): void
+    +retrieveData(query: String): Data
+}
+
+RECTANGLE UserInterface {
+    +inputURLs(): void
+    +selectPlatform(): void
+    +viewData(data: Data): void
+    +exportData(data: Data): void
+}
+
+RECTANGLE UserController {
+    +login(username: String, password: String): User
+    +logout(): void
+    +register(username: String, password: String): User
+}
+
+RECTANGLE User {
+    -username: String
+    -password: String
+}
+
+DatabaseManager -- WebScraper : provides data >
+DatabaseManager -- DataAnalysis : provides data >
+DatabaseManager -- LeadGeneration : provides data >
+DatabaseManager -- DataExport : provides data >
+WebScraper -- UserInterface : interacts with >
+DataAnalysis -- UserInterface : interacts with >
+LeadGeneration -- UserInterface : interacts with >
+Notification -- UserInterface : interacts with >
+DataExport -- UserInterface : interacts with >
+User -- UserController : uses >
+UserController -- UserInterface : interacts with >
+
+@enduml

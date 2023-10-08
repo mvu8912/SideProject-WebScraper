@@ -1,0 +1,45 @@
+@startuml
+
+actor User
+participant UserController
+participant UserInterface
+participant WebScraper
+participant DatabaseManager
+participant DataAnalysis
+
+User -> UserController : Login(username, password)
+activate UserController
+UserController -> DatabaseManager : ValidateUserCredentials(username, password)
+activate DatabaseManager
+DatabaseManager --> UserController : ValidationResponse
+deactivate DatabaseManager
+UserController --> UserInterface : DisplayLoginResult(ValidationResponse)
+deactivate UserController
+activate UserInterface
+
+User -> UserInterface : InputURLs(urls)
+UserInterface -> WebScraper : ScrapeData(urls)
+activate WebScraper
+WebScraper -> DatabaseManager : SaveData(scrapedData)
+activate DatabaseManager
+DatabaseManager --> WebScraper : SaveConfirmation
+deactivate DatabaseManager
+WebScraper --> UserInterface : DisplayScrapedData(scrapedData)
+deactivate WebScraper
+
+User -> UserInterface : RequestSentimentAnalysis(scrapedData)
+UserInterface -> DataAnalysis : PerformSentimentAnalysis(scrapedData)
+activate DataAnalysis
+DataAnalysis --> UserInterface : DisplaySentimentAnalysisResult(analysisResult)
+deactivate DataAnalysis
+
+User -> UserController : Logout()
+activate UserController
+UserController -> UserInterface : DisplayLogoutConfirmation()
+deactivate UserController
+activate UserInterface
+UserInterface --> User : LogoutConfirmation
+deactivate UserInterface
+
+@enduml
+

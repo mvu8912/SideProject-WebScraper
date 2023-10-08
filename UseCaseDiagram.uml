@@ -1,0 +1,31 @@
+@startuml
+
+actor User
+
+rectangle WebScrapingApplication {
+    usecase UC1 as "Input URLs"
+    usecase UC2 as "Select Platform"
+    usecase UC3 as "View Collected Data"
+    usecase UC4 as "Perform Sentiment Analysis"
+    usecase UC5 as "Perform Data Analysis and Prediction"
+    usecase UC6 as "Identify and Collect Leads"
+    usecase UC7 as "Export Data"
+    usecase UC8 as "Receive Email Notifications"
+    usecase UC9 as "Register"
+    usecase UC10 as "Login"
+    usecase UC11 as "Logout"
+}
+
+User --> UC1 : Inputs URLs
+User --> UC2 : Selects Platform
+User --> UC3 : Views Collected Data
+User --> UC4 : Requests Sentiment Analysis
+User --> UC5 : Requests Data Analysis and Prediction
+User --> UC6 : Requests Lead Identification and Collection
+User --> UC7 : Requests Data Export
+User --> UC8 : Receives Email Notifications
+User --> UC9 : Registers
+User --> UC10 : Logs In
+User --> UC11 : Logs Out
+
+@enduml
